@@ -1,3 +1,5 @@
+// OpenGL Pipeline Vertex Array P21
+
 #include <iostream>
 #include <GLUT/glut.h>
 #include <OpenGL/gl.h>
