@@ -74,7 +74,7 @@ void MyMouseMove(GLint X, GLint Y){
         BottomRightY=Y;
     }
     
-    
+    // Switching Color
     if(RED){
         glColor3f(1.0, 0.0, 0.0);
     }else if(GREEN){
