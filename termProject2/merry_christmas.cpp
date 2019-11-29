@@ -6,8 +6,51 @@ GLboolean RED = false;
 GLboolean GREEN = false;
 GLboolean BLUE = false;
 
+void drawLeaf(){
+    glPushMatrix();
+    glLoadIdentity();
+    
+    GLfloat mat_diffuse[] = { 0.0, 1.0, 0.0, 1.0 };
+    GLfloat mat_specular[] = { 0.0, 1.0, 0.0, 1.0 };
+    GLfloat mat_ambient[] = { 0.0, 1.0, 0.0, 1.0 };
+    GLfloat mat_shininess[] = { 15.0 };
+    
+    GLfloat light_specular[] = { 0.156, 0.293, 0.113, 1.0 };
+    GLfloat light_diffuse[] = { 0.156, 0.293, 0.113, 1.0 };
+    GLfloat light_ambient[] = { 0.156, 0.293, 0.113, 1.0 };
+    GLfloat light_position[] = { -10, 20, -25.0, 0.0};
+    
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+
+    
+
+    // 2nd Leaf
+    glTranslated(0.0, 0.05, 0.0);
+    glRotatef(10, 0.0, 1.0, 0.0);
+    glRotatef(90, -1.0, 0.0, 0.0);
+    glRotatef(30, 1.0, -1.0, 1.0);
+    glRotatef(45, -1.0, 0.0, 0.0);
+    glRotatef(28, 0.0, 1.0, 0.0);
+    glutSolidCone(0.4, 0.5, 20, 8);
+    
+    // Highest Leaf
+    glTranslated(0.0, 0.0, 0.3);
+    glutSolidCone(0.35, 0.5, 20, 8);
+    
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+    
+    glPopMatrix();
+}
+
 void makeTree(){
-    // TODO :)
+    drawLeaf();
 }
 
 void makeSignOnBlueBox(){
@@ -15,15 +58,15 @@ void makeSignOnBlueBox(){
     glLoadIdentity();
     
     // set self Light
-    GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0};
-    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0};
-    GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0};
+    GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0 };
     GLfloat mat_shininess[] = { 15.0 };
     
-    GLfloat light_specular[] = { 1.0, 1.0, 0.0, 1.0};
-    GLfloat light_diffuse[] = { 1.0, 1.0, 0.0, 1.0};
-    GLfloat light_ambient[] = { 1.0, 1.0, 0.0, 1.0};
-    GLfloat light_position[] = { -3, 6, -10.0, 0.0}; // x, y, z, w
+    GLfloat light_specular[] = { 1.0, 1.0, 0.0, 1.0 };
+    GLfloat light_diffuse[] = { 1.0, 1.0, 0.0, 1.0 };
+    GLfloat light_ambient[] = { 1.0, 1.0, 0.0, 1.0 };
+    GLfloat light_position[] = { 0, 2, -10.0, 0.0 }; // x, y, z, w
     
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
@@ -58,7 +101,7 @@ void makeBlueBox(){
     GLfloat light_specular[] = { 0.02, 0.47, 0.75, 1.0 };
     GLfloat light_diffuse[] = { 0.02, 0.47, 0.75, 1.0 };
     GLfloat light_ambient[] = { 0.02, 0.47, 0.75, 1.0 };
-    GLfloat light_position[] = { -3, 6, -10.0, 0.0 }; // x, y, z, w
+    GLfloat light_position[] = { 0, 2, -10.0, 0.0 }; // x, y, z, w
     
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
@@ -87,15 +130,15 @@ void makeSignOnGreenBox(){
     glLoadIdentity();
     
     // set self Light
-    GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0};
-    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0};
-    GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0};
+    GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0 };
     GLfloat mat_shininess[] = { 15.0 };
     
-    GLfloat light_specular[] = { 1.0, 1.0, 0.0, 1.0};
-    GLfloat light_diffuse[] = { 1.0, 1.0, 0.0, 1.0};
-    GLfloat light_ambient[] = { 1.0, 1.0, 0.0, 1.0};
-    GLfloat light_position[] = { -3, 6, -10.0, 0.0}; // x, y, z, w
+    GLfloat light_specular[] = { 1.0, 1.0, 0.0, 1.0 };
+    GLfloat light_diffuse[] = { 1.0, 1.0, 0.0, 1.0 };
+    GLfloat light_ambient[] = { 1.0, 1.0, 0.0, 1.0 };
+    GLfloat light_position[] = { 0, 2, -10.0, 0.0 }; // x, y, z, w
     
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
@@ -130,7 +173,7 @@ void makeGreenBox(){
     GLfloat light_specular[] = { 0.0, 1.0, 0.0, 1.0 };
     GLfloat light_diffuse[] = { 0.0, 1.0, 0.0, 1.0 };
     GLfloat light_ambient[] = { 0.0, 1.0, 0.0, 1.0 };
-    GLfloat light_position[] = { -3, 6, -10.0, 0.0 }; // x, y, z, w
+    GLfloat light_position[] = { 0, 2, -10.0, 0.0 }; // x, y, z, w
     
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
@@ -159,15 +202,15 @@ void makeSignOnRedBox(){
     glLoadIdentity();
     
     // set self Light
-    GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0};
-    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0};
-    GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0};
+    GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0 };
     GLfloat mat_shininess[] = { 15.0 };
     
-    GLfloat light_specular[] = { 1.0, 1.0, 0.0, 1.0};
-    GLfloat light_diffuse[] = { 1.0, 1.0, 0.0, 1.0};
-    GLfloat light_ambient[] = { 1.0, 1.0, 0.0, 1.0};
-    GLfloat light_position[] = { -3, 6, -10.0, 0.0}; // x, y, z, w
+    GLfloat light_specular[] = { 1.0, 1.0, 0.0, 1.0 };
+    GLfloat light_diffuse[] = { 1.0, 1.0, 0.0, 1.0 };
+    GLfloat light_ambient[] = { 1.0, 1.0, 0.0, 1.0 };
+    GLfloat light_position[] = { 0, 2, -10.0, 0.0 }; // x, y, z, w
     
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
@@ -195,15 +238,15 @@ void makeRedBox(){
     glLoadIdentity();
 
     // set self Light
-    GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0};
-    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0};
-    GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0};
+    GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0 };
     GLfloat mat_shininess[] = { 15.0 };
     
-    GLfloat light_specular[] = { 1.0, 0.0, 0.0, 1.0};
-    GLfloat light_diffuse[] = { 1.0, 0.0, 0.0, 1.0};
-    GLfloat light_ambient[] = { 1.0, 0.0, 0.0, 1.0};
-    GLfloat light_position[] = { -3, 6, -10.0, 0.0}; // x, y, z, w
+    GLfloat light_specular[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat light_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat light_ambient[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat light_position[] = { 0, 2, -10.0, 0.0 }; // x, y, z, w
     
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
