@@ -10,18 +10,19 @@ GLboolean BLUE = false;
 #define GL_PI 3.1415f
 
 void drawTreeStar(GLfloat x, GLfloat z){
+    
     glPushMatrix();
     glLoadIdentity();
     
     GLfloat mat_diffuse[] = { 0.0, 1.0, 0.0, 1.0 };
     GLfloat mat_specular[] = { 0.0, 1.0, 0.0, 1.0 };
     GLfloat mat_ambient[] = { 0.0, 1.0, 0.0, 1.0 };
-    GLfloat mat_shininess[] = { 15.0 };
+    GLfloat mat_shininess[] = { 10.0 };
     
     GLfloat light_specular[] = { 1.0, 1.0, 0.0, 1.0 };
     GLfloat light_diffuse[] = { 1.0, 1.0, 0.0, 1.0 };
     GLfloat light_ambient[] = { 1.0, 1.0, 0.0, 1.0 };
-    GLfloat light_position[] = { 2.0, 2.0, 2.0, 0.0};
+    GLfloat light_position[] = { 10.0, 0.0, 5.0, 0.0};
     
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
@@ -29,7 +30,6 @@ void drawTreeStar(GLfloat x, GLfloat z){
     glEnable(GL_LIGHT0);
     glLightfv(GL_LIGHT0, GL_POSITION, light_position);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-
     
     glTranslatef(0.0, 0.0, -0.9);
     glRotatef(35, 0.0, 1.0, 0.0);
@@ -38,90 +38,148 @@ void drawTreeStar(GLfloat x, GLfloat z){
     GLfloat toAngle = GL_PI/180;
     GLfloat y = x*cos(36*toAngle)/2.909;
 
-    // draw star, angle ex : sin(30 * (GL_PI/180))
-    glBegin (GL_TRIANGLES);
+    // draw star
+//    glBegin (GL_TRIANGLES);
     // front
+    glBegin(GL_POLYGON);
+    glNormal3f(0.0f, 0.0f, 1.0f);
     glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z); // 1, 5, 8, 11, 15, 16, 21, 22, 27, 28
     glVertex3f(x/2, x*(sin(72*toAngle)-sin(36*toAngle)), 0.0); // 2, 30
     glVertex3f((x-y)/2, 0.0, 0.0); // 3, 6
-
+    glEnd();
+    
+    glBegin(GL_POLYGON);
+    glNormal3f(0.0f, 0.0f, 1.0f);
     glVertex3f(0.0, 0.0, 0.0); // 4, 7
     glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z); // 5
     glVertex3f((x-y)/2, 0.0, 0.0); // 6
+    glEnd();
     
+    glBegin(GL_POLYGON);
+    glNormal3f(0.0f, 0.0f, 1.0f);
     glVertex3f(0.0, 0.0, 0.0); // 7
     glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z); // 8
     glVertex3f((x-y)*sin(36*toAngle)/2, -cos(36*toAngle)*(x-y)/2, 0.0); // 9, 10
+    glEnd();
     
+    glBegin(GL_POLYGON);
+    glNormal3f(0.0f, 0.0f, 1.0f);
     glVertex3f((x-y)*sin(36*toAngle)/2, -cos(36*toAngle)*(x-y)/2, 0.0); // 10
     glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z); // 11
     glVertex3f(x*(1-cos(36*toAngle)), -x*sin(36*toAngle), 0.0); // 12
+    glEnd();
     
+    glBegin(GL_POLYGON);
+    glNormal3f(0.0f, 0.0f, 1.0f);
     glVertex3f(x*(1-cos(36*toAngle)), -x*sin(36*toAngle), 0.0); // 13
     glVertex3f(x/2, ((x-y)*cos(36*toAngle)/2)-x*sin(36*toAngle), 0.0); // 14, 17
     glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z); // 15
+    glEnd();
     
+    glBegin(GL_POLYGON);
+    glNormal3f(0.0f, 0.0f, 1.0f);
     glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z); // 16
     glVertex3f(x/2, ((x-y)*cos(36*toAngle)/2)-x*sin(36*toAngle), 0.0); // 17
     glVertex3f(x*cos(36*toAngle), -x*sin(36*toAngle), 0.0); // 18, 19
+    glEnd();
     
+    glBegin(GL_POLYGON);
+    glNormal3f(0.0f, 0.0f, 1.0f);
     glVertex3f(x*cos(36*toAngle), -x*sin(36*toAngle), 0.0); // 19
     glVertex3f(x-((x-y)*sin(36*toAngle)/2), -cos(36*toAngle)*(x-y)/2, 0.0); // 20, 23
     glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z); // 21
+    glEnd();
     
+    glBegin(GL_POLYGON);
+    glNormal3f(0.0f, 0.0f, 1.0f);
     glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z); // 22
     glVertex3f(x-((x-y)*sin(36*toAngle)/2), -cos(36*toAngle)*(x-y)/2, 0.0); // 23
     glVertex3f(x, 0.0, 0.0); // 24, 25
+    glEnd();
     
+    glBegin(GL_POLYGON);
+    glNormal3f(0.0f, 0.0f, 1.0f);
     glVertex3f(x, 0.0, 0.0); // 25
     glVertex3f((x+y)/2, 0.0, 0.0); // 26, 29
     glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z); // 27
+    glEnd();
     
+    glBegin(GL_POLYGON);
+    glNormal3f(0.0f, 0.0f, 1.0f);
     glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z); // 28
     glVertex3f((x+y)/2, 0.0, 0.0); // 29
     glVertex3f(x/2, x*(sin(72*toAngle)-sin(36*toAngle)), 0.0); // 30
+    glEnd();
     
     // back
+    glBegin(GL_POLYGON);
+    glNormal3f(0.0f, 0.0f, 1.0f);
     glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), -z); // 1, 5, 8, 11, 15, 16, 21, 22, 27, 28
     glVertex3f(x/2, x*(sin(72*toAngle)-sin(36*toAngle)), 0.0); // 2, 30
     glVertex3f((x-y)/2, 0.0, 0.0); // 3, 6
+    glEnd();
     
+    glBegin(GL_POLYGON);
+    glNormal3f(0.0f, 0.0f, 1.0f);
     glVertex3f(0.0, 0.0, 0.0); // 4, 7
     glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), -z); // 5
     glVertex3f((x-y)/2, 0.0, 0.0); // 6
+    glEnd();
     
+    glBegin(GL_POLYGON);
+    glNormal3f(0.0f, 0.0f, 1.0f);
     glVertex3f(0.0, 0.0, 0.0); // 7
     glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), -z); // 8
     glVertex3f((x-y)*sin(36*toAngle)/2, -cos(36*toAngle)*(x-y)/2, 0.0); // 9, 10
+    glEnd();
     
+    glBegin(GL_POLYGON);
+    glNormal3f(0.0f, 0.0f, 1.0f);
     glVertex3f((x-y)*sin(36*toAngle)/2, -cos(36*toAngle)*(x-y)/2, 0.0); // 10
     glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), -z); // 11
     glVertex3f(x*(1-cos(36*toAngle)), -x*sin(36*toAngle), 0.0); // 12
+    glEnd();
     
+    glBegin(GL_POLYGON);
+    glNormal3f(0.0f, 0.0f, 1.0f);
     glVertex3f(x*(1-cos(36*toAngle)), -x*sin(36*toAngle), 0.0); // 13
     glVertex3f(x/2, ((x-y)*cos(36*toAngle)/2)-x*sin(36*toAngle), 0.0); // 14, 17
     glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), -z); // 15
+    glEnd();
     
+    glBegin(GL_POLYGON);
+    glNormal3f(0.0f, 0.0f, 1.0f);
     glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), -z); // 16
     glVertex3f(x/2, ((x-y)*cos(36*toAngle)/2)-x*sin(36*toAngle), 0.0); // 17
     glVertex3f(x*cos(36*toAngle), -x*sin(36*toAngle), 0.0); // 18, 19
+    glEnd();
     
+    glBegin(GL_POLYGON);
+    glNormal3f(0.0f, 0.0f, 1.0f);
     glVertex3f(x*cos(36*toAngle), -x*sin(36*toAngle), 0.0); // 19
     glVertex3f(x-((x-y)*sin(36*toAngle)/2), -cos(36*toAngle)*(x-y)/2, 0.0); // 20, 23
     glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), -z); // 21
+    glEnd();
     
+    glBegin(GL_POLYGON);
+    glNormal3f(0.0f, 0.0f, 1.0f);
     glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), -z); // 22
     glVertex3f(x-((x-y)*sin(36*toAngle)/2), -cos(36*toAngle)*(x-y)/2, 0.0); // 23
     glVertex3f(x, 0.0, 0.0); // 24, 25
+    glEnd();
     
+    glBegin(GL_POLYGON);
+    glNormal3f(0.0f, 0.0f, 1.0f);
     glVertex3f(x, 0.0, 0.0); // 25
     glVertex3f((x+y)/2, 0.0, 0.0); // 26, 29
     glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), -z); // 27
+    glEnd();
     
+    glBegin(GL_POLYGON);
+    glNormal3f(0.0f, 0.0f, 1.0f);
     glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), -z); // 28
     glVertex3f((x+y)/2, 0.0, 0.0); // 29
     glVertex3f(x/2, x*(sin(72*toAngle)-sin(36*toAngle)), 0.0); // 30
-    
     glEnd();
     
     glDisable(GL_DEPTH_TEST);
@@ -231,11 +289,11 @@ void drawLeaf(){
     glutSolidCone(0.35, 0.5, 20, 8);
     glPushMatrix();
     
-    // Highest Leaf
+    // Top Level Leaf
     glTranslated(0.0, 0.0, 0.2);
     glutSolidCone(0.32, 0.5, 20, 8);
     
-    
+    // Bottom Level Leaf
     glPopMatrix();
     glTranslated(0.0, 0.0, -0.2);
     glutSolidCone(0.37, 0.5, 20, 8);
@@ -247,14 +305,7 @@ void drawLeaf(){
     glPopMatrix();
 }
 
-void makeTree(){
-    drawTreeTrunk(-0.07, 0.03, -0.45, 0.12, 0.26);
-    drawLeaf();
-
-    if (RED && GREEN && BLUE) drawTreeStar(0.3, 0.05);
-}
-
-void makeSignOnBlueBox(){
+void makeRedDecoration(){
     glPushMatrix();
     glLoadIdentity();
     
@@ -264,9 +315,106 @@ void makeSignOnBlueBox(){
     GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0 };
     GLfloat mat_shininess[] = { 15.0 };
     
-    GLfloat light_specular[] = { 1.0, 1.0, 0.0, 1.0 };
-    GLfloat light_diffuse[] = { 1.0, 1.0, 0.0, 1.0 };
-    GLfloat light_ambient[] = { 1.0, 1.0, 0.0, 1.0 };
+    GLfloat light_specular[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat light_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat light_ambient[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat light_position[] = { -10, 20, -25.0, 0.0};
+    
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    
+    glPushMatrix();
+    
+    // draw Left ball
+    glTranslatef(0.0, 0.0, -0.3);
+    glRotatef(45, 0.0, -1.0, 0.0);
+    glTranslatef(0.0, 0.0, 0.45);
+    glutSolidSphere(0.04, 20, 8);
+    
+    glPopMatrix();
+    // draw Hightest ball
+    glTranslatef(0.08, 0.5, -0.6);
+    glRotatef(45, 0.0, -1.0, 0.0);
+    glutSolidSphere(0.045, 20, 8);
+
+    // draw right ball
+    glTranslatef(0.4, -0.65, 0.2);
+    glutSolidSphere(0.04, 20, 8);
+    
+    glEnd();
+    
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+    glPopMatrix();
+}
+
+
+void makeTree(){
+    drawTreeTrunk(-0.07, 0.03, -0.45, 0.12, 0.26);
+    drawLeaf();
+    
+    if (RED && GREEN && BLUE) drawTreeStar(0.3, 0.05);
+    if (RED) makeRedDecoration();
+}
+
+// BLUE BOX
+void drawBlueOrangeLeaf(){
+    glPushMatrix();
+    glLoadIdentity();
+    
+    // set self Light
+    GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_shininess[] = { 15.0 };
+    
+    GLfloat light_specular[] = { 0.0, 1.0, 0.0, 1.0 };
+    GLfloat light_diffuse[] = { 0.0, 1.0, 0.0, 1.0 };
+    GLfloat light_ambient[] = { 0.0, 1.0, 0.0, 1.0 };
+    GLfloat light_position[] = { 0, 2, -10.0, 0.0 }; // x, y, z, w
+    
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    
+    glRotatef(45, -1.0, 0.0, 0.0);
+    glRotatef(28, 0.0, 1.0, 0.0);
+    glTranslatef(0.5, 0.2, -0.35);
+    
+    glBegin(GL_POLYGON);
+    glVertex3f(0.0, 0.0, 0.0);
+    glVertex3f(0.0, 0.0, 0.05);
+    glVertex3f(0.05, 0.0, 0.05);
+    glVertex3f(0.05, 0.0, 0.0);
+    glEnd();
+    
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+    glPopMatrix();
+}
+
+void makeOrangeOnBlueBox(){
+    glPushMatrix();
+    glLoadIdentity();
+    
+    // set self Light
+    GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_shininess[] = { 15.0 };
+    
+    GLfloat light_specular[] = { 1.0, 0.496, 0.0, 1.0 };
+    GLfloat light_diffuse[] = { 1.0, 0.496, 0.0, 1.0 };
+    GLfloat light_ambient[] = { 1.0, 0.496, 0.0, 1.0 };
     GLfloat light_position[] = { 0, 2, -10.0, 0.0 }; // x, y, z, w
     
     glShadeModel(GL_SMOOTH);
@@ -281,8 +429,7 @@ void makeSignOnBlueBox(){
     glTranslatef(0.5, 0.15, -0.35);
     
     glutSolidSphere(0.05, 10, 8);
-    
-    // postcondition, Turn off the ligth
+
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
@@ -323,23 +470,64 @@ void makeBlueBox(){
     
     glPopMatrix();
     
-    if (BLUE) makeSignOnBlueBox();
+    if (BLUE){
+        makeOrangeOnBlueBox();
+        drawBlueOrangeLeaf();
+    }
 }
 
-void makeSignOnGreenBox(){
+// GREEN BOX
+void drawGreenOrangeLeaf(){
     glPushMatrix();
     glLoadIdentity();
-    
-    // set self Light
+
     GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
     GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
     GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0 };
     GLfloat mat_shininess[] = { 15.0 };
     
-    GLfloat light_specular[] = { 1.0, 1.0, 0.0, 1.0 };
-    GLfloat light_diffuse[] = { 1.0, 1.0, 0.0, 1.0 };
-    GLfloat light_ambient[] = { 1.0, 1.0, 0.0, 1.0 };
-    GLfloat light_position[] = { 0, 2, -10.0, 0.0 }; // x, y, z, w
+    GLfloat light_specular[] = { 0.0, 1.0, 0.0, 1.0 };
+    GLfloat light_diffuse[] = { 0.0, 1.0, 0.0, 1.0 };
+    GLfloat light_ambient[] = { 0.0, 1.0, 0.0, 1.0 };
+    GLfloat light_position[] = { 0, 2, -10.0, 0.0 };
+    
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    
+    glRotatef(45, -1.0, 0.0, 0.0);
+    glRotatef(28, 0.0, 1.0, 0.0);
+    glTranslatef(0.5, 0.2, -0.65);
+    
+    glBegin(GL_POLYGON);
+    glVertex3f(0.0, 0.0, 0.0);
+    glVertex3f(0.0, 0.0, 0.05);
+    glVertex3f(0.05, 0.0, 0.05);
+    glVertex3f(0.05, 0.0, 0.0);
+    glEnd();
+    
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+    glPopMatrix();
+}
+
+void makeOrangeOnGreenBox(){
+    glPushMatrix();
+    glLoadIdentity();
+    
+    GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_shininess[] = { 15.0 };
+    
+    GLfloat light_specular[] = { 1.0, 0.496, 0.0, 1.0 };
+    GLfloat light_diffuse[] = { 1.0, 0.496, 0.0, 1.0 };
+    GLfloat light_ambient[] = { 1.0, 0.496, 0.0, 1.0 };
+    GLfloat light_position[] = { 0, 2, -10.0, 0.0 };
     
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
@@ -351,10 +539,8 @@ void makeSignOnGreenBox(){
     glRotatef(45, -1.0, 0.0, 0.0);
     glRotatef(28, 0.0, 1.0, 0.0);
     glTranslatef(0.5, 0.15, -0.65);
-    
     glutSolidSphere(0.05, 10, 8);
-    
-    // postcondition, Turn off the ligth
+
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
@@ -374,7 +560,7 @@ void makeGreenBox(){
     GLfloat light_specular[] = { 0.0, 1.0, 0.0, 1.0 };
     GLfloat light_diffuse[] = { 0.0, 1.0, 0.0, 1.0 };
     GLfloat light_ambient[] = { 0.0, 1.0, 0.0, 1.0 };
-    GLfloat light_position[] = { 0, 2, -10.0, 0.0 }; // x, y, z, w
+    GLfloat light_position[] = { 0, 2, -10.0, 0.0 };
     
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
@@ -395,22 +581,63 @@ void makeGreenBox(){
     
     glPopMatrix();
     
-    if (GREEN) makeSignOnGreenBox();
+    if (GREEN) {
+        makeOrangeOnGreenBox();
+        drawGreenOrangeLeaf();
+    }
 }
 
-void makeSignOnRedBox(){
+// RED BOX
+void drawRedOrangeLeaf(){
     glPushMatrix();
     glLoadIdentity();
-    
-    // set self Light
+
     GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
     GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
     GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0 };
     GLfloat mat_shininess[] = { 15.0 };
     
-    GLfloat light_specular[] = { 1.0, 1.0, 0.0, 1.0 };
-    GLfloat light_diffuse[] = { 1.0, 1.0, 0.0, 1.0 };
-    GLfloat light_ambient[] = { 1.0, 1.0, 0.0, 1.0 };
+    GLfloat light_specular[] = { 0.0, 1.0, 0.0, 1.0 };
+    GLfloat light_diffuse[] = { 0.0, 1.0, 0.0, 1.0 };
+    GLfloat light_ambient[] = { 0.0, 1.0, 0.0, 1.0 };
+    GLfloat light_position[] = { 0, 2, -10.0, 0.0 };
+    
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    
+    glRotatef(45, -1.0, 0.0, 0.0);
+    glRotatef(28, 0.0, 1.0, 0.0);
+    glTranslatef(0.2, 0.2, -0.65);
+    
+    glBegin(GL_POLYGON);
+    glVertex3f(0.0, 0.0, 0.0);
+    glVertex3f(0.0, 0.0, 0.05);
+    glVertex3f(0.05, 0.0, 0.05);
+    glVertex3f(0.05, 0.0, 0.0);
+    glEnd();
+    
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+    glPopMatrix();
+}
+
+void makeOragneOnRedBox(){
+    glPushMatrix();
+    glLoadIdentity();
+    
+    GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_shininess[] = { 15.0 };
+    
+    GLfloat light_specular[] = { 1.0, 0.496, 0.0, 1.0 };
+    GLfloat light_diffuse[] = { 1.0, 0.496, 0.0, 1.0 };
+    GLfloat light_ambient[] = { 1.0, 0.496, 0.0, 1.0 };
     GLfloat light_position[] = { 0, 2, -10.0, 0.0 }; // x, y, z, w
     
     glShadeModel(GL_SMOOTH);
@@ -426,19 +653,17 @@ void makeSignOnRedBox(){
     
     glutSolidSphere(0.05, 10, 8);
     
-    // postcondition, Turn off the ligth
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
-
+    
     glPopMatrix();
 }
 
 void makeRedBox(){
     glPushMatrix();
     glLoadIdentity();
-
-    // set self Light
+    
     GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
     GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
     GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0 };
@@ -447,7 +672,7 @@ void makeRedBox(){
     GLfloat light_specular[] = { 1.0, 0.0, 0.0, 1.0 };
     GLfloat light_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
     GLfloat light_ambient[] = { 1.0, 0.0, 0.0, 1.0 };
-    GLfloat light_position[] = { 0, 2, -10.0, 0.0 }; // x, y, z, w
+    GLfloat light_position[] = { 0, 2, -10.0, 0.0 };
     
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
@@ -459,17 +684,18 @@ void makeRedBox(){
     glRotatef(45, -1.0, 0.0, 0.0);
     glRotatef(28, 0.0, 1.0, 0.0);
     glTranslatef(0.2, 0.0, -0.65);
-    
     glutSolidCube(0.20);
     
-    // postcondition, Turn off the ligth
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
 
     glPopMatrix();
     
-    if(RED) makeSignOnRedBox();
+    if (RED){
+        makeOragneOnRedBox();
+        drawRedOrangeLeaf();
+    }
 }
 
 void myDisplay(){
