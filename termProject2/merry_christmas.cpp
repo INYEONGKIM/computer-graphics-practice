@@ -10,7 +10,6 @@ GLboolean BLUE = false;
 #define GL_PI 3.1415f
 
 void drawTreeStar(GLfloat x, GLfloat z){
-    
     glPushMatrix();
     glLoadIdentity();
     
@@ -37,150 +36,79 @@ void drawTreeStar(GLfloat x, GLfloat z){
     
     GLfloat toAngle = GL_PI/180;
     GLfloat y = x*cos(36*toAngle)/2.909;
-
-    // draw star
-//    glBegin (GL_TRIANGLES);
-    // front
-    glBegin(GL_POLYGON);
-    glNormal3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z); // 1, 5, 8, 11, 15, 16, 21, 22, 27, 28
-    glVertex3f(x/2, x*(sin(72*toAngle)-sin(36*toAngle)), 0.0); // 2, 30
-    glVertex3f((x-y)/2, 0.0, 0.0); // 3, 6
-    glEnd();
+    int zSign[] = { 1, -1 };
     
-    glBegin(GL_POLYGON);
-    glNormal3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(0.0, 0.0, 0.0); // 4, 7
-    glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z); // 5
-    glVertex3f((x-y)/2, 0.0, 0.0); // 6
-    glEnd();
-    
-    glBegin(GL_POLYGON);
-    glNormal3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(0.0, 0.0, 0.0); // 7
-    glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z); // 8
-    glVertex3f((x-y)*sin(36*toAngle)/2, -cos(36*toAngle)*(x-y)/2, 0.0); // 9, 10
-    glEnd();
-    
-    glBegin(GL_POLYGON);
-    glNormal3f(0.0f, 0.0f, 1.0f);
-    glVertex3f((x-y)*sin(36*toAngle)/2, -cos(36*toAngle)*(x-y)/2, 0.0); // 10
-    glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z); // 11
-    glVertex3f(x*(1-cos(36*toAngle)), -x*sin(36*toAngle), 0.0); // 12
-    glEnd();
-    
-    glBegin(GL_POLYGON);
-    glNormal3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(x*(1-cos(36*toAngle)), -x*sin(36*toAngle), 0.0); // 13
-    glVertex3f(x/2, ((x-y)*cos(36*toAngle)/2)-x*sin(36*toAngle), 0.0); // 14, 17
-    glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z); // 15
-    glEnd();
-    
-    glBegin(GL_POLYGON);
-    glNormal3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z); // 16
-    glVertex3f(x/2, ((x-y)*cos(36*toAngle)/2)-x*sin(36*toAngle), 0.0); // 17
-    glVertex3f(x*cos(36*toAngle), -x*sin(36*toAngle), 0.0); // 18, 19
-    glEnd();
-    
-    glBegin(GL_POLYGON);
-    glNormal3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(x*cos(36*toAngle), -x*sin(36*toAngle), 0.0); // 19
-    glVertex3f(x-((x-y)*sin(36*toAngle)/2), -cos(36*toAngle)*(x-y)/2, 0.0); // 20, 23
-    glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z); // 21
-    glEnd();
-    
-    glBegin(GL_POLYGON);
-    glNormal3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z); // 22
-    glVertex3f(x-((x-y)*sin(36*toAngle)/2), -cos(36*toAngle)*(x-y)/2, 0.0); // 23
-    glVertex3f(x, 0.0, 0.0); // 24, 25
-    glEnd();
-    
-    glBegin(GL_POLYGON);
-    glNormal3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(x, 0.0, 0.0); // 25
-    glVertex3f((x+y)/2, 0.0, 0.0); // 26, 29
-    glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z); // 27
-    glEnd();
-    
-    glBegin(GL_POLYGON);
-    glNormal3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z); // 28
-    glVertex3f((x+y)/2, 0.0, 0.0); // 29
-    glVertex3f(x/2, x*(sin(72*toAngle)-sin(36*toAngle)), 0.0); // 30
-    glEnd();
-    
-    // back
-    glBegin(GL_POLYGON);
-    glNormal3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), -z); // 1, 5, 8, 11, 15, 16, 21, 22, 27, 28
-    glVertex3f(x/2, x*(sin(72*toAngle)-sin(36*toAngle)), 0.0); // 2, 30
-    glVertex3f((x-y)/2, 0.0, 0.0); // 3, 6
-    glEnd();
-    
-    glBegin(GL_POLYGON);
-    glNormal3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(0.0, 0.0, 0.0); // 4, 7
-    glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), -z); // 5
-    glVertex3f((x-y)/2, 0.0, 0.0); // 6
-    glEnd();
-    
-    glBegin(GL_POLYGON);
-    glNormal3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(0.0, 0.0, 0.0); // 7
-    glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), -z); // 8
-    glVertex3f((x-y)*sin(36*toAngle)/2, -cos(36*toAngle)*(x-y)/2, 0.0); // 9, 10
-    glEnd();
-    
-    glBegin(GL_POLYGON);
-    glNormal3f(0.0f, 0.0f, 1.0f);
-    glVertex3f((x-y)*sin(36*toAngle)/2, -cos(36*toAngle)*(x-y)/2, 0.0); // 10
-    glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), -z); // 11
-    glVertex3f(x*(1-cos(36*toAngle)), -x*sin(36*toAngle), 0.0); // 12
-    glEnd();
-    
-    glBegin(GL_POLYGON);
-    glNormal3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(x*(1-cos(36*toAngle)), -x*sin(36*toAngle), 0.0); // 13
-    glVertex3f(x/2, ((x-y)*cos(36*toAngle)/2)-x*sin(36*toAngle), 0.0); // 14, 17
-    glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), -z); // 15
-    glEnd();
-    
-    glBegin(GL_POLYGON);
-    glNormal3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), -z); // 16
-    glVertex3f(x/2, ((x-y)*cos(36*toAngle)/2)-x*sin(36*toAngle), 0.0); // 17
-    glVertex3f(x*cos(36*toAngle), -x*sin(36*toAngle), 0.0); // 18, 19
-    glEnd();
-    
-    glBegin(GL_POLYGON);
-    glNormal3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(x*cos(36*toAngle), -x*sin(36*toAngle), 0.0); // 19
-    glVertex3f(x-((x-y)*sin(36*toAngle)/2), -cos(36*toAngle)*(x-y)/2, 0.0); // 20, 23
-    glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), -z); // 21
-    glEnd();
-    
-    glBegin(GL_POLYGON);
-    glNormal3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), -z); // 22
-    glVertex3f(x-((x-y)*sin(36*toAngle)/2), -cos(36*toAngle)*(x-y)/2, 0.0); // 23
-    glVertex3f(x, 0.0, 0.0); // 24, 25
-    glEnd();
-    
-    glBegin(GL_POLYGON);
-    glNormal3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(x, 0.0, 0.0); // 25
-    glVertex3f((x+y)/2, 0.0, 0.0); // 26, 29
-    glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), -z); // 27
-    glEnd();
-    
-    glBegin(GL_POLYGON);
-    glNormal3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), -z); // 28
-    glVertex3f((x+y)/2, 0.0, 0.0); // 29
-    glVertex3f(x/2, x*(sin(72*toAngle)-sin(36*toAngle)), 0.0); // 30
-    glEnd();
+    for(int i=0; i<2; i++){
+        glBegin(GL_POLYGON);
+        glNormal3f(0.0f, 0.0f, 1.0f);
+        glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z*zSign[i]); // 1, 5, 8, 11, 15, 16, 21, 22, 27, 28
+        glVertex3f(x/2, x*(sin(72*toAngle)-sin(36*toAngle)), 0.0); // 2, 30
+        glVertex3f((x-y)/2, 0.0, 0.0); // 3, 6
+        glEnd();
+        
+        glBegin(GL_POLYGON);
+        glNormal3f(0.0f, 0.0f, 1.0f);
+        glVertex3f(0.0, 0.0, 0.0); // 4, 7
+        glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z*zSign[i]); // 5
+        glVertex3f((x-y)/2, 0.0, 0.0); // 6
+        glEnd();
+        
+        glBegin(GL_POLYGON);
+        glNormal3f(0.0f, 0.0f, 1.0f);
+        glVertex3f(0.0, 0.0, 0.0); // 7
+        glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z*zSign[i]); // 8
+        glVertex3f((x-y)*sin(36*toAngle)/2, -cos(36*toAngle)*(x-y)/2, 0.0); // 9, 10
+        glEnd();
+        
+        glBegin(GL_POLYGON);
+        glNormal3f(0.0f, 0.0f, 1.0f);
+        glVertex3f((x-y)*sin(36*toAngle)/2, -cos(36*toAngle)*(x-y)/2, 0.0); // 10
+        glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z*zSign[i]); // 11
+        glVertex3f(x*(1-cos(36*toAngle)), -x*sin(36*toAngle), 0.0); // 12
+        glEnd();
+        
+        glBegin(GL_POLYGON);
+        glNormal3f(0.0f, 0.0f, 1.0f);
+        glVertex3f(x*(1-cos(36*toAngle)), -x*sin(36*toAngle), 0.0); // 13
+        glVertex3f(x/2, ((x-y)*cos(36*toAngle)/2)-x*sin(36*toAngle), 0.0); // 14, 17
+        glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z*zSign[i]); // 15
+        glEnd();
+        
+        glBegin(GL_POLYGON);
+        glNormal3f(0.0f, 0.0f, 1.0f);
+        glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z*zSign[i]); // 16
+        glVertex3f(x/2, ((x-y)*cos(36*toAngle)/2)-x*sin(36*toAngle), 0.0); // 17
+        glVertex3f(x*cos(36*toAngle), -x*sin(36*toAngle), 0.0); // 18, 19
+        glEnd();
+        
+        glBegin(GL_POLYGON);
+        glNormal3f(0.0f, 0.0f, 1.0f);
+        glVertex3f(x*cos(36*toAngle), -x*sin(36*toAngle), 0.0); // 19
+        glVertex3f(x-((x-y)*sin(36*toAngle)/2), -cos(36*toAngle)*(x-y)/2, 0.0); // 20, 23
+        glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z*zSign[i]); // 21
+        glEnd();
+        
+        glBegin(GL_POLYGON);
+        glNormal3f(0.0f, 0.0f, 1.0f);
+        glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z*zSign[i]); // 22
+        glVertex3f(x-((x-y)*sin(36*toAngle)/2), -cos(36*toAngle)*(x-y)/2, 0.0); // 23
+        glVertex3f(x, 0.0, 0.0); // 24, 25
+        glEnd();
+        
+        glBegin(GL_POLYGON);
+        glNormal3f(0.0f, 0.0f, 1.0f);
+        glVertex3f(x, 0.0, 0.0); // 25
+        glVertex3f((x+y)/2, 0.0, 0.0); // 26, 29
+        glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z*zSign[i]); // 27
+        glEnd();
+        
+        glBegin(GL_POLYGON);
+        glNormal3f(0.0f, 0.0f, 1.0f);
+        glVertex3f(x/2, -(y*tan(54*toAngle))/(2*cos(54*toAngle)), z*zSign[i]); // 28
+        glVertex3f((x+y)/2, 0.0, 0.0); // 29
+        glVertex3f(x/2, x*(sin(72*toAngle)-sin(36*toAngle)), 0.0); // 30
+        glEnd();
+    }
     
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_LIGHTING);
@@ -251,7 +179,6 @@ void drawTreeTrunk(GLfloat centerx, GLfloat centery, GLfloat centerz, GLfloat ra
     }
     glEnd();
     
-    
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
@@ -289,11 +216,11 @@ void drawLeaf(){
     glutSolidCone(0.35, 0.5, 20, 8);
     glPushMatrix();
     
-    // Top Level Leaf
+    // Top Level
     glTranslated(0.0, 0.0, 0.2);
     glutSolidCone(0.32, 0.5, 20, 8);
     
-    // Bottom Level Leaf
+    // Bottom
     glPopMatrix();
     glTranslated(0.0, 0.0, -0.2);
     glutSolidCone(0.37, 0.5, 20, 8);
@@ -309,7 +236,6 @@ void makeRedDecoration(){
     glPushMatrix();
     glLoadIdentity();
     
-    // set self Light
     GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
     GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
     GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0 };
@@ -353,13 +279,189 @@ void makeRedDecoration(){
     glPopMatrix();
 }
 
+void makeGreenDecoration(){
+    glPushMatrix();
+    glLoadIdentity();
+    
+    GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_shininess[] = { 15.0 };
+    
+    GLfloat light_specular[] = { 0.586, 0.293, 0.0, 1.0 };
+    GLfloat light_diffuse[] = { 0.586, 0.293, 0.0, 1.0 };
+    GLfloat light_ambient[] = { 0.586, 0.293, 0.0, 1.0 };
+    GLfloat light_position[] = { -10, 20, -25.0, 0.0};
+    
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+
+    glPushMatrix();
+    glTranslatef(0.6, 0.3, -0.3);
+    glRotatef(60, 0.0, -1.0, 0.0);
+    glTranslatef(0.0, 0.0, 0.45);
+    glRotatef(90, 0.0, 1.0, 0.0);
+    glutWireSphere(0.05, 8, 10);
+    glPopMatrix();
+    
+    glTranslatef(0.24, 0.05, -0.6);
+    glRotatef(30, 0.0, -1.0, 0.0);
+    glutWireSphere(0.045, 8, 10);
+    
+    glTranslatef(-0.42, -0.16, 0.2);
+    glutWireSphere(0.045, 8, 10);
+
+    glEnd();
+    
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+    glPopMatrix();
+}
+
+void makeBlueDecoration(){
+    glPushMatrix();
+    glLoadIdentity();
+    
+    GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_shininess[] = { 15.0 };
+    
+    GLfloat light_specular[] = { 0.93, 0.898, 0.766, 1.0 };
+    GLfloat light_diffuse[] = { 0.93, 0.898, 0.766, 1.0 };
+    GLfloat light_ambient[] = { 0.93, 0.898, 0.766, 1.0 };
+    GLfloat light_position[] = { -10, 20, -25.0, 0.0};
+    
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    
+    glPushMatrix();
+    
+    // draw Left Torus
+    glTranslatef(0.24, 0.2, -0.75);
+    glRotatef(60, 0.0, -1.0, 0.0);
+    glTranslatef(0.0, 0.0, 0.45);
+    glRotatef(90, 0.0, 1.0, 0.0);
+    glutSolidTorus(0.026, 0.08, 20, 8);
+    glPopMatrix();
+    
+    // draw 2nd
+    glTranslatef(0.24, 0.05, -0.6);
+    glRotatef(30, 0.0, -1.0, 0.0);
+    glutSolidTorus(0.02, 0.07, 20, 8);
+    
+    // draw Lowest
+    glTranslatef(-0.25, -0.2, 0.2);
+    glRotatef(55, 0.0, 1.0, 0.0);
+    glutSolidTorus(0.025, 0.08, 20, 8);
+    
+    glEnd();
+    
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+    glPopMatrix();
+}
+
+void makePurpleBulbDecoration(){
+    glPushMatrix();
+    glLoadIdentity();
+    
+    GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_shininess[] = { 15.0 };
+    
+    GLfloat light_specular[] = { 0.867, 0.867, 0.934, 1.0 };
+    GLfloat light_diffuse[] = { 0.867, 0.867, 0.934, 1.0 };
+    GLfloat light_ambient[] = { 0.867, 0.867, 0.934, 1.0 };
+    GLfloat light_position[] = { 0, 10, -25.0, 0.0};
+    
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    
+    glPushMatrix();
+    glTranslatef(0.35, 0.2, -0.8);
+    glRotatef(45, 0.0, -1.0, 0.0);
+    glTranslatef(0.0, 0.0, 0.45);
+    glutSolidSphere(0.052, 20, 8);
+    glPopMatrix();
+    
+    glTranslatef(-0.15, 0.03, -0.5);
+    glutSolidSphere(0.04, 20, 8);
+    
+    glEnd();
+    
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+    glPopMatrix();
+}
+
+void makePinkBulbDecoration(){
+    glPushMatrix();
+    glLoadIdentity();
+    
+    GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_shininess[] = { 15.0 };
+    
+    GLfloat light_specular[] = { 1.0, 0.816, 0.859, 1.0 };
+    GLfloat light_diffuse[] = { 1.0, 0.816, 0.859, 1.0 };
+    GLfloat light_ambient[] = { 1.0, 0.816, 0.859, 1.0 };
+    GLfloat light_position[] = { 0, 10, -25.0, 0.0 };
+    
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    
+    glPushMatrix();
+    glTranslatef(0.4, 0.0, -0.8);
+    glRotatef(45, 0.0, -1.0, 0.0);
+    glTranslatef(0.0, 0.0, 0.45);
+    glutSolidSphere(0.052, 20, 8);
+    glPopMatrix();
+    
+    glTranslatef(-0.05, 0.4, -0.6);
+    glutSolidSphere(0.052, 20, 8);
+    
+    glEnd();
+    
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+    glPopMatrix();
+}
 
 void makeTree(){
     drawTreeTrunk(-0.07, 0.03, -0.45, 0.12, 0.26);
     drawLeaf();
     
-    if (RED && GREEN && BLUE) drawTreeStar(0.3, 0.05);
+    if (RED && GREEN && BLUE){
+        drawTreeStar(0.3, 0.05);
+        makePinkBulbDecoration();
+        makePurpleBulbDecoration();
+    }
     if (RED) makeRedDecoration();
+    if (GREEN) makeGreenDecoration();
+    if (BLUE) makeBlueDecoration();
 }
 
 // BLUE BOX
@@ -367,7 +469,6 @@ void drawBlueOrangeLeaf(){
     glPushMatrix();
     glLoadIdentity();
     
-    // set self Light
     GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
     GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
     GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0 };
@@ -376,7 +477,7 @@ void drawBlueOrangeLeaf(){
     GLfloat light_specular[] = { 0.0, 1.0, 0.0, 1.0 };
     GLfloat light_diffuse[] = { 0.0, 1.0, 0.0, 1.0 };
     GLfloat light_ambient[] = { 0.0, 1.0, 0.0, 1.0 };
-    GLfloat light_position[] = { 0, 2, -10.0, 0.0 }; // x, y, z, w
+    GLfloat light_position[] = { 0, 2, -10.0, 0.0 };
     
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
@@ -415,7 +516,7 @@ void makeOrangeOnBlueBox(){
     GLfloat light_specular[] = { 1.0, 0.496, 0.0, 1.0 };
     GLfloat light_diffuse[] = { 1.0, 0.496, 0.0, 1.0 };
     GLfloat light_ambient[] = { 1.0, 0.496, 0.0, 1.0 };
-    GLfloat light_position[] = { 0, 2, -10.0, 0.0 }; // x, y, z, w
+    GLfloat light_position[] = { 0, 2, -10.0, 0.0 };
     
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
@@ -449,7 +550,7 @@ void makeBlueBox(){
     GLfloat light_specular[] = { 0.02, 0.47, 0.75, 1.0 };
     GLfloat light_diffuse[] = { 0.02, 0.47, 0.75, 1.0 };
     GLfloat light_ambient[] = { 0.02, 0.47, 0.75, 1.0 };
-    GLfloat light_position[] = { 0, 2, -10.0, 0.0 }; // x, y, z, w
+    GLfloat light_position[] = { 0, 2, -10.0, 0.0 };
     
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
@@ -638,7 +739,7 @@ void makeOragneOnRedBox(){
     GLfloat light_specular[] = { 1.0, 0.496, 0.0, 1.0 };
     GLfloat light_diffuse[] = { 1.0, 0.496, 0.0, 1.0 };
     GLfloat light_ambient[] = { 1.0, 0.496, 0.0, 1.0 };
-    GLfloat light_position[] = { 0, 2, -10.0, 0.0 }; // x, y, z, w
+    GLfloat light_position[] = { 0, 2, -10.0, 0.0 };
     
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
@@ -711,7 +812,6 @@ void myDisplay(){
     // make Tree
     makeTree();
 
-
     glFlush();
 }
 
@@ -747,7 +847,6 @@ int main(int argc,char** argv) {
     glClearColor(0.4, 0.4, 0.4, 0.0);
 
     glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
-
     
     glutDisplayFunc(myDisplay);
     glutKeyboardFunc(MyKeyboard);
