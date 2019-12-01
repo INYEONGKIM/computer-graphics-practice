@@ -6,8 +6,7 @@
 ------------------
 <div>
 <img width="499" alt="screenshot1" src="https://user-images.githubusercontent.com/42140395/69916824-f079e800-14a2-11ea-9b85-cd7e8c3572a2.png">
-<img width="499" alt="screenshot2" src="https://user-images.githubusercontent.com/42140395/69916844-25863a80-14a3-11ea-90c1-78ec48eb5da7.png">
-
+<img width="499" alt="screenshot2" src="https://user-images.githubusercontent.com/42140395/69916896-df7da680-14a3-11ea-909e-608428263ade.png">
 </div>
 
 
