@@ -1,26 +1,672 @@
-#include <iostream>
 #include <GLUT/glut.h>
 #include <OpenGL/gl.h>
+#include <iostream>
 #include <math.h>
 
 GLboolean RED = false;
 GLboolean GREEN = false;
 GLboolean BLUE = false;
 
+//rudolph transformation
+GLfloat tx, ty, tz = 0;
+GLfloat rx, ry, rz =0;
+GLfloat lx, ly, lz =0;
+
+GLfloat a, ax, ay, az = 0;//rrudolph rotation
+GLfloat s, sx, sy, sz = 0;//snowman arm
+GLfloat p, px, py, pz = 0;//snowman arm
+GLfloat dx, dy, dz = 0.8;//rudolph scale
+
 #define GL_PI 3.1415f
+
+char Rudolph_position[] = {'a', 'q', 'w', 's'};
+int Rudolph_position_idx = 0;
+char Rudolph_flag = 'a';
+
+void drawSnowmanBody(){
+    glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
+    glLoadIdentity();
+    
+    GLfloat mat_diffuse[] = { 0.9, 0.9, 0.9, 1.0 };
+    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat mat_ambient[] = { 0.1, 0.1, 0.1, 1.0 };
+    GLfloat mat_shininess[] = { 15.0 };
+    
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess);
+    
+    GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0};
+    GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0};
+    GLfloat light_ambient[] = { 1.0, 1.0, 1.0, 1.0};
+    GLfloat light_position[] = {-20, 15, -60.0, 0.0 };
+    //GLfloat light_position[] = { 10, 20, -25.0, 0.0};
+    
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    
+    // Draw Body
+    glTranslatef(0.7f ,0.5f, 0.0f);
+    glScalef(0.7, 0.7, 0.7);
+    glutSolidSphere(0.2f,20,20);
+    
+    // Draw Head
+    glTranslatef(0.0f, 0.25f, 0.0f);
+    glutSolidSphere(0.1f,20,20);
+    
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+    
+    glPopAttrib();
+    glPopMatrix();
+}
+
+void drawSnowmanEyes() {
+    glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
+    glLoadIdentity();
+    
+    GLfloat mat_diffuse[] = { 0.9, 0.9, 0.9, 1.0 };
+    GLfloat mat_specular[] = { 0.1, 0.1, 0.1, 1.0 };
+    GLfloat mat_ambient[] = { 0.0, 0.1, 0.1, 1.0 };
+    GLfloat mat_shininess[] = { 15.0 };
+    
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess);
+    
+    GLfloat light_specular[] = { 0.0, 0.0, 0.0, 1.0};
+    GLfloat light_diffuse[] = { 0.0, 0.0, 0.0, 1.0};
+    GLfloat light_ambient[] = { 0.0, 0.0, 0.0, 1.0};
+    GLfloat light_position[] = { -10, 20, -25.0, 0.0};
+    
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    
+    glColor3f(0.0f,0.0f,0.0f);
+    
+    glTranslatef(0.71f, 0.7f, -0.7);
+    glutSolidSphere(0.01f,10,10);
+    glTranslatef(-0.06f, 0.0f, 0.0f);
+    glutSolidSphere(0.01f,10,10);
+    
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+    
+    glPopAttrib();
+    glPopMatrix();
+    
+}
+
+void drawSnowmanNose() {
+    glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
+    glLoadIdentity();
+    
+    GLfloat mat_diffuse[] = { 1.0, 0.5, 0.0, 1.0 };
+    GLfloat mat_specular[] = { 0.5, 0.5, 0.0, 1.0 };
+    GLfloat mat_ambient[] = { 1.0, 0.5, 0.0, 1.0 };
+    GLfloat mat_shininess[] = { 30.0 };
+    
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess);
+    
+    GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0};
+    GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0};
+    GLfloat light_ambient[] = { 0.1, 0.1, 0.1, 1.0};
+    GLfloat light_position[] = { -10, 20, -25.0, 0.0};
+    
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    
+    // Draw Nose
+    glColor3f(1.0f, 0.5f , 0.5f);
+    glTranslatef(0.67f, 0.67f, -1);
+    glRotatef(-10.0f,0.0f, 1.0f, 0.0f);
+    glutSolidCone(0.02f,0.5f,10,2);
+    
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+    
+    glPopAttrib();
+    glPopMatrix();
+}
+
+void drawSnowmanEars() {
+    glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
+    glLoadIdentity();
+    
+    GLfloat mat_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat mat_specular[] = { 0.5, 0.5, 0.5, 1.0 };
+    GLfloat mat_ambient[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat mat_shininess[] = { 15.0 };
+    
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess);
+    
+    GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0};
+    GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0};
+    GLfloat light_ambient[] = { 1.0, 1.0, 1.0, 1.0};
+    GLfloat light_position[] = { -10, 20, -25.0, 0.0};
+    
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    
+    glColor3f(0.0f,0.0f,0.0f);
+    
+    glTranslatef(0.75f, 0.75f, 0.2f);
+    glutSolidSphere(0.03f,10,10);
+    glTranslatef(-0.08f, 0.0f, 0.0f);
+    glutSolidSphere(0.03f,10,10);
+    
+    glPopAttrib();
+    glPopMatrix();
+}
+
+void drawSnowmanButtons() {
+    glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
+    glLoadIdentity();
+    
+    glScalef(0.7, 0.7, 0.7);
+    GLfloat mat_diffuse[] = { 0.0, 0.0, 1.0, 1.0 };
+    GLfloat mat_specular[] = { 0.0, 0.0, 1.0, 1.0 };
+    GLfloat mat_ambient[] = { 0.0, 0.0, 1.0, 1.0 };
+    GLfloat mat_shininess[] = { 15.0 };
+    
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess);
+    
+    GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0};
+    GLfloat light_diffuse[] = { 0.8, 0.8, 0.8, 1.0};
+    GLfloat light_ambient[] = { 0.2, 0.2, 0.2, 1.0};
+    GLfloat light_position[] = { -10, 20, -25.0, 0.0};
+    
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    
+    // Draw Buttons
+    glTranslatef(0.94, 0.85f, -0.9);
+    glutSolidSphere(0.02f,10,10);
+    glTranslatef(0.0f, -0.08f, 0.0f);
+    glutSolidSphere(0.02f,10,10);
+    glTranslatef(0.0f, -0.08f, 0.0f);
+    glutSolidSphere(0.02f,10,10);
+    
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+    
+    glPopAttrib();
+    glPopMatrix();
+}
+
+void drawSnowmanRArms() {
+    glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
+    glLoadIdentity();
+    
+    glRotatef(s, sx, sy, sz);
+    glTranslatef(rx, ry, rz);
+    
+    GLfloat mat_diffuse[] = { 0.29, 0.16, 0.043, 1.0 };
+    GLfloat mat_specular[] = { 0.29, 0.16, 0.043, 1.0 };
+    GLfloat mat_ambient[] = { 0.29, 0.16, 0.043, 1.0 };
+    GLfloat mat_shininess[] = { 15.0 };
+    
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess);
+    
+    GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0};
+    GLfloat light_diffuse[] = { 0.29, 0.16, 0.043, 1.0};
+    GLfloat light_ambient[] = { 0.29, 0.16, 0.043, 1.0};
+    GLfloat light_position[] = { -10, 20, -25.0, 0.0};
+    
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    
+    //Draw Right-Arms
+    glTranslatef(0.85f, 0.563f, 0.0);
+    glRotatef(-30.0f ,0.0f, 0.0f, 1.0f);
+    glScalef (0.7, 0.07, 0.3);
+    glutSolidCube (0.25);
+    
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+    
+    glPopAttrib();
+    glPopMatrix();
+}
+
+void drawSnowmanLArms() {
+    glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
+    glLoadIdentity();
+    
+    glRotatef(p, px, py, pz);
+    glTranslatef(lx, ly, lz);
+    //glRotatef(-50, 0, 0, 1);
+    GLfloat mat_diffuse[] = { 0.29, 0.16, 0.043, 1.0 };
+    GLfloat mat_specular[] = { 0.29, 0.16, 0.043, 1.0 };
+    GLfloat mat_ambient[] = { 0.29, 0.16, 0.043, 1.0 };
+    GLfloat mat_shininess[] = { 15.0 };
+    
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess);
+    
+    GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0};
+    GLfloat light_diffuse[] = { 0.29, 0.16, 0.043, 1.0};
+    GLfloat light_ambient[] = { 0.29, 0.16, 0.043, 1.0};
+    GLfloat light_position[] = { -10, 20, -25.0, 0.0};
+    
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    
+    //Draw Left-Arms
+    glTranslatef(0.56f, 0.57f, 0.2);
+    glRotatef(30.0f ,0.0f, 0.0f, 1.0f);
+    glScalef (0.7, 0.07, 0.3);
+    glutSolidCube (0.25);
+    
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+    
+    glPopAttrib();
+    glPopMatrix();
+}
+
+void makeSnowman() {
+    drawSnowmanBody();
+    drawSnowmanEyes();
+    drawSnowmanNose();
+    drawSnowmanEars();
+    drawSnowmanButtons();
+    drawSnowmanRArms();
+    drawSnowmanLArms();
+}
+
+void drawRudolphFace() {
+    glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
+    glLoadIdentity();
+    
+    //glScalef(dx, dy, dz);
+    glTranslatef(tx, ty, tz);
+    glRotatef(a, ax, ay, az);
+    
+    
+    glScalef(0.7, 0.7, 0.7);
+    GLfloat mat_diffuse[] = { 0.55, 0.27, 0.08, 1.0 };
+    GLfloat mat_specular[] = { 0.5, 0.5, 0.5, 1.0 };
+    GLfloat mat_ambient[] = { 0.55, 0.27, 0.08, 1.0 };
+    GLfloat mat_shininess[] = { 15.0 };
+    
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess);
+    //glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, mat_emi);
+    
+    GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0};
+    GLfloat light_diffuse[] = { 0.5, 0.5, 0.5, 1.0};
+    GLfloat light_ambient[] = { 0.29, 0.16, 0.043, 1.0};
+    GLfloat light_position[] = { 8, 10, 10.0, 1.0};
+    //GLfloat light_position[] = { 8, 8, 10.0, 1.0};
+    //GLfloat light_position[] = { -5, 10, 18.0, 0.0};
+    //GLfloat light_position[] = { -5, 6, 3.0, 0.0};
+    
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    
+    if (Rudolph_flag == 'w'){
+        glScaled(0.75, 0.75, 0.75);
+    }
+    
+    //Draw Rudolph Face
+    glPushMatrix();
+    glColor3f (0.545098, 0.270588, 0.07451);//saddle-brown color
+    glTranslatef(-0.7 ,-0.7, 0.05);//0.3,0.3
+    glRotatef(-10, 1, 0, 0);
+    glRotatef(-20, 0, 1, 0);
+    glScalef (0.5, 0.3, 0.4);
+    glutSolidCube (0.5);
+    glPopMatrix();
+    
+    //Draw Rudolph Neck
+    glPushMatrix();
+    glColor3f (0.545098, 0.270588, 0.07451);//saddle-brown color
+    glTranslatef(-0.76 ,-0.85, 0.05);
+    glRotatef(-10, 1, 0, 0);
+    glRotatef(-20, 0, 1, 0);
+    glScalef (0.2, 0.3, 0.4);
+    glutSolidCube (0.5);
+    glPopMatrix();
+    
+    //Draw Rudolph Body
+    glPushMatrix();
+    glColor3f (0.545098, 0.270588, 0.07451);//saddle-brown color
+    glTranslatef(-0.95 ,-1, 0.03);
+    glRotatef(-10, 1, 0, 0);
+    glRotatef(-20, 0, 1, 0);
+    glScalef (1.0, 0.4, 0.6);
+    glutSolidCube (0.5);
+    glPopMatrix();
+    
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+    
+    glPopAttrib();
+    glPopMatrix();
+}
+void drawRudolphLegs(){
+    glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
+    glLoadIdentity();
+    
+    //glScalef(dx, dy, dz);
+    glTranslatef(tx, ty, tz);
+    glRotatef(a, ax, ay, az);
+    
+    glScalef(0.7, 0.7, 0.7);
+    
+    GLfloat mat_diffuse[] = { 0.55, 0.27, 0.08, 1.0 };//0.29, 0.16, 0.043, 1.0
+    GLfloat mat_specular[] = { 0.5, 0.5, 0.5, 1.0 };
+    GLfloat mat_ambient[] = { 0.55, 0.27, 0.08, 1.0 };
+    GLfloat mat_shininess[] = { 15.0 };
+    
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess);
+    //glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, mat_emi);
+    
+    GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0};
+    GLfloat light_diffuse[] = { 0.5, 0.5, 0.5, 1.0};
+    GLfloat light_ambient[] = { 0.1, 0.1, 0.1, 1.0};
+    //GLfloat light_position[] = { 3, 6, -9.0, 1.0};
+    GLfloat light_position[] = { 30, 20, 7.0, 300.0};
+    //GLfloat light_position[] = { -5, -25, -10.0, 1.0};
+    //GLfloat light_position[] = { -5, 6, 3.0, 0.0};
+    
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    
+    if (Rudolph_flag == 'w'){
+        glScaled(0.75, 0.75, 0.75);
+    }
+    
+    //Draw Rudolph Legs
+    glPushMatrix();
+    //back-right leg
+    glTranslatef(-1.2 ,-1.2, 0.1);
+    glRotatef(-10, 1, 0, 0);
+    glRotatef(-20, 0, 1, 0);
+    glScalef (0.1, 0.7, 0.1);
+    glutSolidCube (0.5);
+    //back-left leg
+    glTranslatef(0.0 ,0.0, -2);
+    glutSolidCube (0.5);
+    //front-left leg
+    glTranslatef(4.1 ,0.0, 0.0);
+    glutSolidCube (0.5);
+    //front-right leg
+    glTranslatef(0 ,0.0, 2);
+    glutSolidCube (0.5);
+    
+    glPopMatrix();
+    
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+    
+    glPopAttrib();
+    glPopMatrix();
+}
+
+void drawRudolphRedNose() {
+    glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
+    glLoadIdentity();
+    
+    //glScalef(dx, dy, dz);
+    glTranslatef(tx, ty, tz);
+    glRotatef(a, ax, ay, az);
+    
+    GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_specular[] = { 0.1, 0.1, 0.1, 1.0 };
+    GLfloat mat_ambient[] = { 1.0, 0, 0, 1.0 };
+    GLfloat mat_shininess[] = { 55.0 };
+    
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess);
+    
+    GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0};
+    GLfloat light_diffuse[] = { 1.0, 0.0, 0.0, 1.0};
+    GLfloat light_ambient[] = { 1.0, 0.0, 0.0, 1.0};
+    GLfloat light_position[] = { 6, 6, -9.0, 1.0};
+    
+    if (Rudolph_flag == 'w'){
+        glScaled(0.75, 0.75, 0.75);
+    }
+    
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    
+    glColor3f (1, 0, 0);
+    glTranslatef(-0.38 ,-0.49, 0.1);
+    glutSolidSphere(0.04, 10, 10);
+    
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+    
+    glPopAttrib();
+    glPopMatrix();
+}
+
+void drawRudolphEyes() {
+    glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
+    glLoadIdentity();
+    
+    //glScalef(dx, dy, dz);
+    glTranslatef(tx, ty, tz);
+    glRotatef(a, ax, ay, az);
+    
+    GLfloat mat_diffuse[] = { 0.9, 0.9, 0.9, 1.0 };
+    GLfloat mat_specular[] = { 0.1, 0.1, 0.1, 1.0 };
+    GLfloat mat_ambient[] = { 0.0, 0.1, 0.1, 1.0 };
+    GLfloat mat_shininess[] = { 15.0 };
+    
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess);
+    
+    GLfloat light_specular[] = { 0.0, 0.0, 0.0, 1.0};
+    GLfloat light_diffuse[] = { 0.0, 0.0, 0.0, 1.0};
+    GLfloat light_ambient[] = { 0.0, 0.0, 0.0, 1.0};
+    GLfloat light_position[] = { 6, 6, -9.0, 1.0};
+    
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    
+    if (Rudolph_flag == 'w'){
+        glScaled(0.75, 0.75, 0.75);
+    }
+    
+    //Draw Right Eye
+    glTranslatef(-0.43 ,-0.5, -0.05);
+    glRotatef(-10, 1, 0, 0);
+    glRotatef(-20, 0, 1, 0);
+    glutSolidSphere(0.02f,10,10);
+    glTranslatef(0, 0.0f, 0.2);
+    glutSolidSphere(0.02f,10,10);
+    
+    glPopMatrix();
+    
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+    
+    glPopAttrib();
+    glPopMatrix();
+}
+
+void drawRudolphAntlersTail() {
+    glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
+    glLoadIdentity();
+    //glScalef(dx, dy, dz);
+    glTranslatef(tx, ty, tz);
+    glRotatef(a, ax, ay, az);
+    
+    GLfloat mat_diffuse[] = { 0.29, 0.16, 0.043, 1.0 };
+    GLfloat mat_specular[] = { 0.29, 0.16, 0.043, 1.0 };
+    GLfloat mat_ambient[] = { 0.29, 0.16, 0.043, 1.0 };
+    GLfloat mat_shininess[] = { 15.0 };
+    
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess);
+    
+    GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0};
+    GLfloat light_diffuse[] = { 0.29, 0.16, 0.043, 1.0};
+    GLfloat light_ambient[] = { 0.29, 0.16, 0.043, 1.0};
+    GLfloat light_position[] = { -5, 6, 3.0, 0.0};
+    //GLfloat light_position[] = { 5, -6, -9.0, 1.0};
+    
+    if (Rudolph_flag == 'w'){
+        glScaled(0.75, 0.75, 0.75);
+    }
+    
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    
+    //Draw RudolphAntlers
+    glPushMatrix();
+    //left-antlers
+    glTranslatef(-0.49 ,-0.4, 0.09);
+    glRotatef(40.0f ,0.0f, 0.0f, 1.0f);
+    glScalef (0.1, 0.5, 0.1);
+    glutSolidCube (0.3);
+    //right-antlers
+    glTranslatef(-0.0, 0, -1);
+    glutSolidCube (0.3);
+    
+    glPopMatrix();
+    
+    //Draw RudolphTail
+    glPushMatrix();
+    glTranslatef(-0.87, -0.65, -0.05);
+    glutSolidSphere(0.05f,10,10);
+    glPopMatrix();
+    
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+    
+    glPopAttrib();
+    glPopMatrix();
+}
+
+void makeRudolph() {
+    drawRudolphFace();
+    drawRudolphLegs();
+    drawRudolphEyes();
+    drawRudolphRedNose();
+    drawRudolphAntlersTail();
+}
 
 void drawTreeStar(GLfloat x, GLfloat z){
     glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
     glLoadIdentity();
     
-    GLfloat mat_diffuse[] = { 0.0, 1.0, 0.0, 1.0 };
-    GLfloat mat_specular[] = { 0.0, 1.0, 0.0, 1.0 };
-    GLfloat mat_ambient[] = { 0.0, 1.0, 0.0, 1.0 };
-    GLfloat mat_shininess[] = { 10.0 };
+    GLfloat mat_diffuse[] = { 1.0, 1.0, 0.0, 1.0 };
+    GLfloat mat_specular[] = { 1.0, 1.0, 0.0, 1.0 };
+    GLfloat mat_ambient[] = { 1.0, 1.0, 0.0, 1.0 };
+    GLfloat mat_shininess[] = { 50.0 };
     
-    GLfloat light_specular[] = { 1.0, 1.0, 0.0, 1.0 };
-    GLfloat light_diffuse[] = { 1.0, 1.0, 0.0, 1.0 };
-    GLfloat light_ambient[] = { 1.0, 1.0, 0.0, 1.0 };
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess);
+    
+    GLfloat light_specular[] = { 0.0, 0.0, 0.0, 0.2 };
+    GLfloat light_diffuse[] = { 0.0, 0.0, 0.0, 0.2 };
+    GLfloat light_ambient[] = { 0.0, 0.0, 0.0, 0.2 };
     GLfloat light_position[] = { 10.0, 0.0, 5.0, 0.0};
     
     glShadeModel(GL_SMOOTH);
@@ -114,13 +760,15 @@ void drawTreeStar(GLfloat x, GLfloat z){
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
     
+    glPopAttrib();
     glPopMatrix();
 }
 
 void drawTreeTrunk(GLfloat centerx, GLfloat centery, GLfloat centerz, GLfloat radius, GLfloat h){
     glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
     glLoadIdentity();
-
+    
     GLfloat mat_diffuse[] = { 0.0, 1.0, 0.0, 1.0 };
     GLfloat mat_specular[] = { 0.0, 1.0, 0.0, 1.0 };
     GLfloat mat_ambient[] = { 0.0, 1.0, 0.0, 1.0 };
@@ -182,11 +830,14 @@ void drawTreeTrunk(GLfloat centerx, GLfloat centery, GLfloat centerz, GLfloat ra
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
+    
+    glPopAttrib();
     glPopMatrix();
 }
 
 void drawLeaf(){
     glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
     glLoadIdentity();
     
     GLfloat mat_diffuse[] = { 0.0, 1.0, 0.0, 1.0 };
@@ -205,7 +856,7 @@ void drawLeaf(){
     glEnable(GL_LIGHT0);
     glLightfv(GL_LIGHT0, GL_POSITION, light_position);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-
+    
     // 2nd Leaf
     glTranslated(0.0, 0.05, 0.2);
     glRotatef(10, 0.0, 1.0, 0.0);
@@ -229,11 +880,13 @@ void drawLeaf(){
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
     
+    glPopAttrib();
     glPopMatrix();
 }
 
 void makeRedDecoration(){
     glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
     glLoadIdentity();
     
     GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
@@ -266,7 +919,7 @@ void makeRedDecoration(){
     glTranslatef(0.08, 0.5, -0.6);
     glRotatef(45, 0.0, -1.0, 0.0);
     glutSolidSphere(0.045, 20, 8);
-
+    
     // draw right ball
     glTranslatef(0.4, -0.65, 0.2);
     glutSolidSphere(0.04, 20, 8);
@@ -276,11 +929,14 @@ void makeRedDecoration(){
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
+    
+    glPopAttrib();
     glPopMatrix();
 }
 
 void makeGreenDecoration(){
     glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
     glLoadIdentity();
     
     GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
@@ -299,7 +955,7 @@ void makeGreenDecoration(){
     glEnable(GL_LIGHT0);
     glLightfv(GL_LIGHT0, GL_POSITION, light_position);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-
+    
     glPushMatrix();
     glTranslatef(0.6, 0.3, -0.3);
     glRotatef(60, 0.0, -1.0, 0.0);
@@ -314,17 +970,20 @@ void makeGreenDecoration(){
     
     glTranslatef(-0.42, -0.16, 0.2);
     glutWireSphere(0.045, 8, 10);
-
+    
     glEnd();
     
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
+    
+    glPopAttrib();
     glPopMatrix();
 }
 
 void makeBlueDecoration(){
     glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
     glLoadIdentity();
     
     GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
@@ -369,11 +1028,14 @@ void makeBlueDecoration(){
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
+    
+    glPopAttrib();
     glPopMatrix();
 }
 
 void makePurpleBulbDecoration(){
     glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
     glLoadIdentity();
     
     GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
@@ -408,11 +1070,13 @@ void makePurpleBulbDecoration(){
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
+    glPopAttrib();
     glPopMatrix();
 }
 
 void makePinkBulbDecoration(){
     glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
     glLoadIdentity();
     
     GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
@@ -447,6 +1111,7 @@ void makePinkBulbDecoration(){
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
+    glPopAttrib();
     glPopMatrix();
 }
 
@@ -467,6 +1132,7 @@ void makeTree(){
 // BLUE BOX
 void drawBlueOrangeLeaf(){
     glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
     glLoadIdentity();
     
     GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
@@ -500,11 +1166,14 @@ void drawBlueOrangeLeaf(){
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
+    
+    glPopAttrib();
     glPopMatrix();
 }
 
 void makeOrangeOnBlueBox(){
     glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
     glLoadIdentity();
     
     // set self Light
@@ -530,16 +1199,18 @@ void makeOrangeOnBlueBox(){
     glTranslatef(0.5, 0.15, -0.35);
     
     glutSolidSphere(0.05, 10, 8);
-
+    
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
     
+    glPopAttrib();
     glPopMatrix();
 }
 
 void makeBlueBox(){
     glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
     glLoadIdentity();
     
     GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
@@ -569,6 +1240,7 @@ void makeBlueBox(){
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
     
+    glPopAttrib();
     glPopMatrix();
     
     if (BLUE){
@@ -580,8 +1252,9 @@ void makeBlueBox(){
 // GREEN BOX
 void drawGreenOrangeLeaf(){
     glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
     glLoadIdentity();
-
+    
     GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
     GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
     GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0 };
@@ -613,11 +1286,14 @@ void drawGreenOrangeLeaf(){
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
+    
+    glPopAttrib();
     glPopMatrix();
 }
 
 void makeOrangeOnGreenBox(){
     glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
     glLoadIdentity();
     
     GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
@@ -641,18 +1317,20 @@ void makeOrangeOnGreenBox(){
     glRotatef(28, 0.0, 1.0, 0.0);
     glTranslatef(0.5, 0.15, -0.65);
     glutSolidSphere(0.05, 10, 8);
-
+    
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
     
+    glPopAttrib();
     glPopMatrix();
 }
 
 void makeGreenBox(){
     glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
     glLoadIdentity();
-
+    
     GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
     GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
     GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0 };
@@ -680,6 +1358,7 @@ void makeGreenBox(){
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
     
+    glPopAttrib();
     glPopMatrix();
     
     if (GREEN) {
@@ -691,8 +1370,9 @@ void makeGreenBox(){
 // RED BOX
 void drawRedOrangeLeaf(){
     glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
     glLoadIdentity();
-
+    
     GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
     GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
     GLfloat mat_ambient[] = { 1.0, 0.0, 0.0, 1.0 };
@@ -724,11 +1404,14 @@ void drawRedOrangeLeaf(){
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
+    
+    glPopAttrib();
     glPopMatrix();
 }
 
 void makeOragneOnRedBox(){
     glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
     glLoadIdentity();
     
     GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
@@ -758,11 +1441,13 @@ void makeOragneOnRedBox(){
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
     
+    glPopAttrib();
     glPopMatrix();
 }
 
 void makeRedBox(){
     glPushMatrix();
+    glPushAttrib(GL_LIGHTING_BIT);
     glLoadIdentity();
     
     GLfloat mat_diffuse[] = { 1.0, 0.0, 0.0, 1.0 };
@@ -790,7 +1475,8 @@ void makeRedBox(){
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
-
+    
+    glPopAttrib();
     glPopMatrix();
     
     if (RED){
@@ -799,19 +1485,29 @@ void makeRedBox(){
     }
 }
 
+void makeBoxes(){
+    makeRedBox();
+    makeGreenBox();
+    makeBlueBox();
+}
+
 void myDisplay(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     
     // make Boxes
-    makeRedBox();
-    makeGreenBox();
-    makeBlueBox();
-
+    makeBoxes();
+    
     // make Tree
     makeTree();
-
+    
+    //makeSnowman
+    makeSnowman();
+    
+    //makeRudolph
+    makeRudolph();
+    
     glFlush();
 }
 
@@ -819,21 +1515,202 @@ void MyKeyboard(unsigned char key, int x, int y){
     switch (key) {
         case 'R':
         case 'r':
-        RED = !RED;
-        break;
-        
+            RED = !RED;
+            break;
+            
         case 'G':
         case 'g':
-        GREEN = !GREEN;
-        break;
-        
+            GREEN = !GREEN;
+            break;
+            
         case 'B':
         case 'b':
-        BLUE = !BLUE;
-        break;
-    
+            BLUE = !BLUE;
+            break;
+            
+            // rotate left side
+        case 'E':
+        case 'e':
+            if(Rudolph_position_idx == 3){
+                Rudolph_position_idx = 0;
+            }else{
+                Rudolph_position_idx++;
+            }
+            Rudolph_flag = Rudolph_position[Rudolph_position_idx];
+            switch (Rudolph_flag) {
+                case 'a':
+                    tx =0; ty =0; tz =0; a = 0; ax =0; ay =0; az = 0; s = 0; sx =0; sy =0; sz =0;
+                    p =-0; px =0; py =0; pz =0; lx = 0; ly = 0; lz =0; rx = 0; ry = 0; rz = 0;
+                    
+                    break;
+                    
+                case 'q':
+                    tx = -0.4; ty = 1.08; tz =0.; a = 80; ax =-0.1; ay =1; az = -0.23; s = 0; sx =0; sy =0; sz = 0;
+                    p =-0; px =0; py =0; pz =0; lx = 0; ly = 0; lz =0; rx = 0; ry = 0; rz = 0;
+                    
+                    break;
+                    
+                case 'w':
+                    tx = 0.15; ty = 1.1; tz =0.08; a = -220; ax =0; ay =1; az = -0.3; s = 90; sx =0; sy =0; sz = 1;
+                    p =-90; px =0; py =0; pz =1; lx = -1.2; ly = 0.0; lz =0; rx = -0.2; ry = -1.4; rz = -0.2;
+                    
+                    break;
+                    
+                case 's':
+                    tx = 0.3; ty =0.1; tz =0; a = -120;ax =0; ay =1; az = -0.2; s = 0; sx =0; sy =0; sz = 0;
+                    p =-0; px =0; py =0; pz =0; lx = 0; ly = 0; lz =0; rx = 0; ry = 0; rz = 0;
+                    
+                    break;
+            }
+            break;
+            
+            // rotate right side
+        case 'D':
+        case 'd':
+            if(Rudolph_position_idx == 0){
+                Rudolph_position_idx = 3;
+            }else{
+                Rudolph_position_idx--;
+            }
+            Rudolph_flag = Rudolph_position[Rudolph_position_idx];
+            switch (Rudolph_flag) {
+                case 'a':
+                    tx =0; ty =0; tz =0; a = 0; ax =0; ay =0; az = 0; s = 0; sx =0; sy =0; sz =0;
+                    p =-0; px =0; py =0; pz =0; lx = 0; ly = 0; lz =0; rx = 0; ry = 0; rz = 0;
+                    break;
+                    
+                case 'q':
+                    tx = -0.4; ty = 1.08; tz =0.; a = 80; ax =-0.1; ay =1; az = -0.23; s = 0; sx =0; sy =0; sz = 0;
+                    p =-0; px =0; py =0; pz =0; lx = 0; ly = 0; lz =0; rx = 0; ry = 0; rz = 0;
+                    break;
+                    
+                case 'w':
+                    tx = 0.15; ty = 1.1; tz =0.08; a = -220; ax =0; ay =1; az = -0.3; s = 90; sx =0; sy =0; sz = 1;
+                    p =-90; px =0; py =0; pz =1; lx = -1.2; ly = 0.0; lz =0; rx = -0.2; ry = -1.4; rz = -0.2;
+                    break;
+                    
+                case 's':
+                    tx = 0.3; ty =0.1; tz =0; a = -120;ax =0; ay =1; az = -0.2; s = 0; sx =0; sy =0; sz = 0;
+                    p =-0; px =0; py =0; pz =0; lx = 0; ly = 0; lz =0; rx = 0; ry = 0; rz = 0;
+                    break;
+            }
+            break;
+            
+        case 'Q':
+        case 'q':
+            Rudolph_flag = 'q';
+            Rudolph_position_idx = 1;
+            
+            tx = -0.4;
+            ty = 1.08;
+            tz =0.;
+            a = 80;
+            ax =-0.1;
+            ay =1;
+            az = -0.23;
+            s = 0;
+            sx =0;
+            sy =0;
+            sz = 0;
+            p =-0;
+            px =0;
+            py =0;
+            pz =0;
+            lx = 0;
+            ly = 0;
+            lz =0;
+            rx = 0;
+            ry = 0;
+            rz = 0;
+            
+            break;
+            
+        case 'W':
+        case 'w':
+            Rudolph_flag = 'w';
+            Rudolph_position_idx = 2;
+            
+            tx = 0.15;
+            ty = 1.1;
+            tz =0.08;
+            a = -220;
+            ax =0;
+            ay =1;
+            az = -0.3;
+            s = 90;
+            sx =0;
+            sy =0;
+            sz = 1;
+            p =-90;
+            px =0;
+            py =0;
+            pz =1;
+            lx = -1.2;
+            ly = 0.0;
+            lz =0;
+            rx = -0.2;
+            ry = -1.4;
+            rz = -0.2;
+            
+            break;
+        case 'S':
+        case 's':
+            Rudolph_flag = 's';
+            Rudolph_position_idx = 3;
+            
+            tx = 0.3;
+            ty =0.1;
+            tz =0;
+            a = -120;
+            ax =0;
+            ay =1;
+            az = -0.2;
+            s = 0;
+            sx =0;
+            sy =0;
+            sz = 0;
+            p =-0;
+            px =0;
+            py =0;
+            pz =0;
+            lx = 0;
+            ly = 0;
+            lz =0;
+            rx = 0;
+            ry = 0;
+            rz = 0;
+            
+            break;
+        case 'A' :
+        case 'a' :
+            Rudolph_flag = 'a';
+            Rudolph_position_idx = 0;
+            
+            tx =0;
+            ty =0;
+            tz =0;
+            a = 0;
+            ax =0;
+            ay =0;
+            az = 0;
+            s = 0;
+            sx =0;
+            sy =0;
+            sz =0;
+            p =-0;
+            px =0;
+            py =0;
+            pz =0;
+            lx = 0;
+            ly = 0;
+            lz =0;
+            rx = 0;
+            ry = 0;
+            rz = 0;
+            
+            break;
         default:
-        break;
+            break;
     }
     glutPostRedisplay();
 }
@@ -845,13 +1722,13 @@ int main(int argc,char** argv) {
     glutInitWindowPosition(0, 0);
     glutCreateWindow("Merry Christmas :)");
     glClearColor(0.4, 0.4, 0.4, 0.0);
-
+    
     glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
     
     glutDisplayFunc(myDisplay);
     glutKeyboardFunc(MyKeyboard);
-
+    
     glutMainLoop();
-
+    
     return 0;
 }
